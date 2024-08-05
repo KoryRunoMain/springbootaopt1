@@ -6,10 +6,6 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 @Data
 @ToString
 @AllArgsConstructor
@@ -18,10 +14,5 @@ import javax.validation.constraints.Size;
 public class NewOrderDto {
 
     private String description;
-
-//    @NotNull
-//    @NotBlank
-//    @Size(min = 1, max = 2000)
-//    private String description;
 
 }

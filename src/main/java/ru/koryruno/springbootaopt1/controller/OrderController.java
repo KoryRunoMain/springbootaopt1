@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import ru.koryruno.springbootaopt1.annotation.Valid;
 import ru.koryruno.springbootaopt1.model.requestDto.NewOrderDto;
 import ru.koryruno.springbootaopt1.model.requestDto.UpdateOrderDto;
 import ru.koryruno.springbootaopt1.model.responseDto.OrderFullDto;
@@ -28,23 +28,15 @@ public class OrderController {
     @PostMapping(path = "/users/{userId}/orders")
     @ResponseStatus(HttpStatus.CREATED)
     public OrderFullDto create(@PathVariable Long userId,
-                               @RequestBody NewOrderDto newOrderDto) {
+                               @Valid @RequestBody NewOrderDto newOrderDto) {
         return service.createOrder(userId, newOrderDto);
     }
 
     @PatchMapping(path = "/users/{userId}/orders/{orderId}")
     @ResponseStatus(HttpStatus.OK)
-    public OrderFullDto updateOrder(@PathVariable Long userId,
+    public OrderFullDto update(@PathVariable Long userId,
                                     @PathVariable Long orderId,
-                                    @RequestBody UpdateOrderDto updateOrderDto) {
-        return service.updateOrder(userId, orderId, updateOrderDto);
-    }
-
-    @PatchMapping(path = "/admin/orders/{orderId}")
-    @ResponseStatus(HttpStatus.OK)
-    public OrderFullDto updateOrderStatus(@PathVariable Long userId,
-                                          @PathVariable Long orderId,
-                                          @RequestBody UpdateOrderDto updateOrderDto) {
+                                    @Valid @RequestBody UpdateOrderDto updateOrderDto) {
         return service.updateOrder(userId, orderId, updateOrderDto);
     }
 
@@ -56,13 +48,12 @@ public class OrderController {
 
     @GetMapping(path = "/users/orders")
     @ResponseStatus(HttpStatus.OK)
-    public List<OrderFullDto> getAll(@RequestParam(defaultValue = "0") int from,
-                                     @RequestParam(defaultValue = "10") int size) {
+    public List<OrderFullDto> getAll() {
         return service.getAllOrders();
     }
 
     @DeleteMapping(path = "/admin/orders/{orderId}")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long orderId) {
         service.deleteOrder(orderId);
     }

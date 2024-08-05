@@ -16,7 +16,7 @@ public class SuccessLoggingAspect {
     @AfterReturning("within(ru.koryruno.springbootaopt1.service.*) && " +
             "@within(ru.koryruno.springbootaopt1.annotation.SuccessLogging)")
     public void afterThrowing(JoinPoint joinPoint) {
-        log.info("Метод успешно выполнился: {}", joinPoint.getSignature().getName());
+        log.info("The method was successfully executed: {}", joinPoint.getSignature().getName());
     }
 
 }

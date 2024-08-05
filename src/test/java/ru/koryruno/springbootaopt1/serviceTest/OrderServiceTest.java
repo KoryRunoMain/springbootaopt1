@@ -1,4 +1,4 @@
-package ru.koryruno.springbootaopt1.service;
+package ru.koryruno.springbootaopt1.serviceTest;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -6,6 +6,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.test.context.ContextConfiguration;
+import ru.koryruno.springbootaopt1.aspect.ValidateAspect;
 import ru.koryruno.springbootaopt1.model.OrderDetails;
 import ru.koryruno.springbootaopt1.model.OrderStatus;
 import ru.koryruno.springbootaopt1.model.User;
@@ -16,6 +19,7 @@ import ru.koryruno.springbootaopt1.model.responseDto.OrderFullDto;
 import ru.koryruno.springbootaopt1.repository.OrderRepository;
 import ru.koryruno.springbootaopt1.repository.UserRepository;
 import org.junit.jupiter.api.Test;
+import ru.koryruno.springbootaopt1.service.OrderServiceImpl;
 
 import java.util.Collections;
 import java.util.List;
@@ -28,6 +32,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 
 @ExtendWith(MockitoExtension.class)
+@EnableAspectJAutoProxy
+@ContextConfiguration(classes = {OrderServiceImpl.class, ValidateAspect.class})
 public class OrderServiceTest {
 
     @Mock

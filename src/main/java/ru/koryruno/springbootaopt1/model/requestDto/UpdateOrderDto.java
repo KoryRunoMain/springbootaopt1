@@ -16,14 +16,4 @@ public class UpdateOrderDto {
     private String description;
     private String status;
 
-//    @NotNull
-//    @NotBlank
-//    @Size(min = 1, max = 2000)
-//    private String description;
-//
-//    @NotNull
-//    @NotBlank
-//    @Size(min = 1)
-//    private String status;
-
 }

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import ru.koryruno.springbootaopt1.annotation.Valid;
 import ru.koryruno.springbootaopt1.model.requestDto.NewUserDto;
 import ru.koryruno.springbootaopt1.model.requestDto.UpdateUserDto;
 import ru.koryruno.springbootaopt1.model.responseDto.UserFullDto;
@@ -27,14 +27,14 @@ public class UserController {
 
     @PostMapping(path = "/admin/users")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserFullDto create(@RequestBody NewUserDto newUserDto) {
+    public UserFullDto create(@Valid @RequestBody NewUserDto newUserDto) {
         return service.createUser(newUserDto);
     }
 
     @PatchMapping(path = "/users/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public UserFullDto update(@PathVariable Long userId,
-                              @RequestBody UpdateUserDto updateUserDto) {
+                              @Valid @RequestBody UpdateUserDto updateUserDto) {
         return service.updateUser(userId, updateUserDto);
     }
 

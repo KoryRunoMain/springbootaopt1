@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import ru.koryruno.springbootaopt1.annotation.Asynchronously;
 import ru.koryruno.springbootaopt1.annotation.PreInvoke;
 import ru.koryruno.springbootaopt1.annotation.SuccessLogging;
-import ru.koryruno.springbootaopt1.annotation.Valid;
-import ru.koryruno.springbootaopt1.exception.ApplicationException;
 import ru.koryruno.springbootaopt1.exception.NotFoundException;
 import ru.koryruno.springbootaopt1.model.RoleType;
 import ru.koryruno.springbootaopt1.model.User;
@@ -28,7 +26,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Asynchronously
     @PreInvoke(roles = {RoleType.ADMIN, RoleType.USER})
-    public UserFullDto createUser(@Valid NewUserDto newUserDto) {
+    public UserFullDto createUser(NewUserDto newUserDto) {
         User user = userRepository.save(userMapper.toUser(newUserDto));
         return userMapper.toUserFullDto(user);
     }
@@ -36,9 +34,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Asynchronously
     @PreInvoke(roles = {RoleType.ADMIN, RoleType.USER})
-    public UserFullDto updateUser(Long userId, @Valid UpdateUserDto updateUserDto) {
+    public UserFullDto updateUser(Long userId, UpdateUserDto updateUserDto) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(String.format("Пользователь с id:{} не найден:", userId)));
+                .orElseThrow(() -> new NotFoundException(String.format("User with id:{} not found", userId)));
         user.setName(updateUserDto.getName());
         User updatedUser = userRepository.save(user);
         return userMapper.toUserFullDto(updatedUser);
@@ -48,7 +46,7 @@ public class UserServiceImpl implements UserService {
     @PreInvoke(roles = {RoleType.ADMIN, RoleType.USER})
     public UserFullDto getUser(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(String.format("Пользователь с id:{} не найден:", userId)));
+                .orElseThrow(() -> new NotFoundException(String.format("User with id:{} not found", userId)));
         return userMapper.toUserFullDto(user);
     }
 

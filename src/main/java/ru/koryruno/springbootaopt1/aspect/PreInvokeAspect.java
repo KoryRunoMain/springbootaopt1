@@ -36,14 +36,14 @@ public class PreInvokeAspect {
         String currentUser = UserContext.getUSERNAME();
 
         if (!USERS.containsKey(currentUser)) {
-            throw new ApplicationException("Пользователь не найден" + currentUser);
+            throw new ApplicationException("User is not found: " + currentUser);
         }
 
         var roles = Arrays.stream(preInvoke.roles()).toList();
         var userRoles = USERS.get(currentUser);
 
         if (roles.stream().noneMatch(userRoles::contains)) {
-            throw new ApplicationException("Доступ запрещён. Роли: " + userRoles);
+            throw new ApplicationException("Access Denied. Roles: " + userRoles);
         }
     }
 

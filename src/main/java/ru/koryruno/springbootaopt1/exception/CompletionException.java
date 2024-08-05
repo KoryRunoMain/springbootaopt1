@@ -3,9 +3,9 @@ package ru.koryruno.springbootaopt1.exception;
 import ru.koryruno.springbootaopt1.annotation.Throw;
 
 @Throw
-public class ApplicationException extends RuntimeException {
+public class CompletionException extends RuntimeException {
 
-    public ApplicationException(String message) {
+    public CompletionException(String message) {
         super(message);
     }
 

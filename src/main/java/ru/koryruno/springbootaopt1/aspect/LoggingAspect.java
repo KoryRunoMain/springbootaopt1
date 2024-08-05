@@ -20,14 +20,14 @@ public class LoggingAspect {
         String methodName = joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();
 
-        log.info("Выполнение метода {} с аргументами {}", methodName, args);
+        log.info("Executing method {} with arguments {}", methodName, args);
 
         Object result = joinPoint.proceed();
 
         long endTime = System.currentTimeMillis();
         long executionTime = endTime - startTime;
 
-        log.info("Метод {} выполнился за {} мс с результатом {}", methodName, executionTime, result);
+        log.info("Method {} completed in {} ms with result {}", methodName, executionTime, result);
 
         return result;
     }

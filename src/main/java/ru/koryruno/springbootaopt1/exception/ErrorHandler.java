@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.CompletionException;
 
 @RestControllerAdvice
 public class ErrorHandler {
@@ -29,6 +30,17 @@ public class ErrorHandler {
         return new ApiError(
                 ApiStatus.NOT_FOUND,
                 "The required object was not found",
+                e.getMessage(),
+                LocalDateTime.now().format(formatter)
+        );
+    }
+
+    @ExceptionHandler(CompletionException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiError completionExceptionHandler(CompletionException e) {
+        return new ApiError(
+                ApiStatus.CONFLICT,
+                "Integrity constraint has been violated",
                 e.getMessage(),
                 LocalDateTime.now().format(formatter)
         );

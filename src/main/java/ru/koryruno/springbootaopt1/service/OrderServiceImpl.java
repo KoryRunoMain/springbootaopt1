@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import ru.koryruno.springbootaopt1.annotation.Asynchronously;
 import ru.koryruno.springbootaopt1.annotation.PreInvoke;
 import ru.koryruno.springbootaopt1.annotation.SuccessLogging;
-import ru.koryruno.springbootaopt1.annotation.Valid;
-import ru.koryruno.springbootaopt1.exception.ApplicationException;
 import ru.koryruno.springbootaopt1.exception.NotFoundException;
 import ru.koryruno.springbootaopt1.model.OrderDetails;
 import ru.koryruno.springbootaopt1.model.OrderStatus;
@@ -32,9 +30,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Asynchronously
     @PreInvoke(roles = {RoleType.ADMIN, RoleType.USER})
-    public OrderFullDto createOrder(Long userId, @Valid NewOrderDto newOrderDto) {
+    public OrderFullDto createOrder(Long userId, NewOrderDto newOrderDto) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(String.format("Пользователь с id:{} не найден:", userId)));
+                .orElseThrow(() -> new NotFoundException(String.format("User with id:{} not found", userId)));
         OrderDetails order = orderMapper.toOrder(newOrderDto);
         order.setInitiator(user);
         order.setStatus(OrderStatus.PENDING);
@@ -45,15 +43,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Asynchronously
     @PreInvoke(roles = {RoleType.ADMIN})
-    public OrderFullDto updateOrder(Long userId, Long orderId, @Valid UpdateOrderDto updateOrderDto) {
-        userRepository.findById(userId).orElseThrow(() -> new NotFoundException(String.format("Пользователь с id:{} не найден:", userId)));
+    public OrderFullDto updateOrder(Long userId, Long orderId, UpdateOrderDto updateOrderDto) {
+        userRepository.findById(userId).orElseThrow(() -> new NotFoundException(String.format("User with id:{} not found", userId)));
         OrderDetails order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new NotFoundException(String.format("Заказ с id:{} не найден:", orderId)));
+                .orElseThrow(() -> new NotFoundException(String.format("Order with id:{} not found", orderId)));
         order.setDescription(updateOrderDto.getDescription());
-        if (updateOrderDto.getStatus() == null) {
-            throw new ApplicationException("Статус не может быть null");
-        }
-
         order.setStatus(OrderStatus.valueOf(updateOrderDto.getStatus()));
         orderRepository.save(order);
         return orderMapper.toOrderFullDto(order);
@@ -63,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
     @PreInvoke(roles = {RoleType.ADMIN, RoleType.USER})
     public OrderFullDto getOrder(Long orderId) {
         OrderDetails order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new NotFoundException(String.format("Заказ с id: не найден", orderId)));
+                .orElseThrow(() -> new NotFoundException(String.format("Order with id:{} not found", orderId)));
         return orderMapper.toOrderFullDto(order);
     }
 

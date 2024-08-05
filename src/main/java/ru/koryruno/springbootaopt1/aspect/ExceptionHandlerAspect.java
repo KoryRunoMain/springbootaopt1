@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 @Order(1)
 public class ExceptionHandlerAspect {
 
-    @AfterThrowing(pointcut = "within(ru.koryruno.springbootaopt1.service.*) && " +
+    @AfterThrowing(pointcut = "within(ru.koryruno.springbootaopt1.controller.*) && " +
             "execution(* *(..)) throws ru.koryruno.springbootaopt1.exception.Throw *", throwing = "e")
     public void afterThrowing(JoinPoint joinPoint, Exception e) {
-        log.info("Ошибка: {}", e.getMessage());
-        log.info("Произошла ошибка при вызове метода: {}", joinPoint.getSignature().toLongString());
+        log.info("Error: {}", e.getMessage());
+        log.info("An error occurred while calling the method: {}", joinPoint.getSignature().toLongString());
     }
 }

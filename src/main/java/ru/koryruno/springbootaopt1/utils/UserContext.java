@@ -2,7 +2,7 @@ package ru.koryruno.springbootaopt1.utils;
 
 public class UserContext {
 
-    private static ThreadLocal<String> USERNAME = new ThreadLocal<>();
+    private static final ThreadLocal<String> USERNAME = new ThreadLocal<>();
 
     public UserContext() {
     }

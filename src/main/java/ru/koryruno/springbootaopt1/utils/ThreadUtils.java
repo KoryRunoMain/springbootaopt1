@@ -2,9 +2,7 @@ package ru.koryruno.springbootaopt1.utils;
 
 public class ThreadUtils {
 
-    private ThreadUtils() {
-
-    }
+    private ThreadUtils() {}
 
     public static void waitTime(long time) {
         try {

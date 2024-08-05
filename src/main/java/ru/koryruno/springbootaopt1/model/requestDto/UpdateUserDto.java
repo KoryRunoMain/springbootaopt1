@@ -6,10 +6,6 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 @Data
 @ToString
 @AllArgsConstructor
@@ -18,10 +14,5 @@ import javax.validation.constraints.Size;
 public class UpdateUserDto {
 
     private String name;
-
-//    @NotNull
-//    @NotBlank
-//    @Size(min = 2, max = 250)
-//    private String name;
 
 }
